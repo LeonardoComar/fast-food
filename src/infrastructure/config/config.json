@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "fastfooduser",
+    "password": "fastfood",
+    "database": "fastfood2",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
