@@ -21,7 +21,17 @@ router.get('/produtos/:id', async (req, res) => {
   }
 });
 
+router.get('/produtos/:id/editar', async (req, res) => {
+  try {
+    await productController.editForm(req, res);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.post('/produtos', productController.create);
+
+router.put('/produtos/:id', productController.update);
 
 router.delete('/produtos/:id', productController.delete);
 

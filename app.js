@@ -3,6 +3,7 @@ const session = require('express-session');
 const dotenv = require('dotenv');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override');
 const sequelize = require('./src/infrastructure/database/database');
 const authRoutes = require('./src/infrastructure/routes/authRoutes');
 const productRoutes = require('./src/infrastructure/routes/productRoutes');
@@ -11,7 +12,8 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use(session({
   secret: 'your_secret_key',
   resave: false,

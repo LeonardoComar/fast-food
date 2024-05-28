@@ -33,12 +33,11 @@ class ProductController {
     }
   }
 
-  async update(req, res) {
+  async editForm(req, res) {
     try {
-      const [updated] = await Product.update(req.params.id, req.body);
-      if (updated) {
-        const updatedProduct = await Product.findById(req.params.id);
-        res.status(200).json(updatedProduct);
+      const product = await Product.findByPk(req.params.id);
+      if (product) {
+        res.render('products/edit', { product });
       } else {
         res.status(404).json({ error: 'Product not found' });
       }
@@ -46,6 +45,31 @@ class ProductController {
       res.status(500).json({ error: error.message });
     }
   }
+
+  async update(req, res) {
+    try {
+      const product = await Product.findByPk(req.params.id);
+      if (product) {
+        console.log('Request body:', req.body); // Log para verificar os dados recebidos
+        const [updated] = await Product.update(req.body, {
+          where: { id: req.params.id }
+        });
+        if (updated) {
+          console.log('Product updated:', req.body); // Log para verificar os dados atualizados
+          res.redirect('/produtos'); // Redireciona após atualização
+        } else {
+          res.status(404).json({ error: 'Product not found' });
+        }
+      } else {
+        res.status(404).json({ error: 'Product not found' });
+      }
+    } catch (error) {
+      console.log('Error:', error.message); // Log do erro
+      res.status(500).json({ error: error.message });
+    }
+  }
+  
+  
 
   async delete(req, res) {
     try {
@@ -64,7 +88,6 @@ class ProductController {
       res.status(500).json({ error: error.message });
     }
   }
-
 }
 
 module.exports = new ProductController();
