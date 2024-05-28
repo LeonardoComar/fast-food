@@ -35,3 +35,7 @@ const User = sequelize.define('User', {
 
 module.exports = User;
 
+const Order = require('./Order'); // Importe Order depois de exportar User
+
+User.hasMany(Order, { foreignKey: 'user_id' }); // Agora defina a associação
+

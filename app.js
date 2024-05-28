@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 const sequelize = require('./src/infrastructure/database/database');
 const authRoutes = require('./src/infrastructure/routes/authRoutes');
 const productRoutes = require('./src/infrastructure/routes/productRoutes');
+const orderRoutes = require('./src/infrastructure/routes/orderRoutes');
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.set('layout', 'layouts/main');
 
 app.use(authRoutes);
 app.use(productRoutes);
+app.use(orderRoutes);
 
 app.get('/', (req, res) => {
   if (req.session.user) {
